@@ -8,12 +8,41 @@ use parser::Parser;
 fn main() {
     // The input source language
     let program_source = "
-        fname = \"hello.txt\";
-        fp = fopen(fname, \"r\");
-        if (fp) {
-            status = fread(buf, 1, 10, fp);
-        }
-        fclose(fp);
+a0_num = 1; a0_den = 1;
+a1_num = 1; a1_den = 2;
+a2_num = 1; a2_den = 3;
+a3_num = 1; a3_den = 4;
+a4_num = 1; a4_den = 5;
+
+a0_num = 1 * (a0_num * a1_den - a1_num * a0_den);
+a0_den = a0_den * a1_den;
+
+a1_num = 2 * (a1_num * a2_den - a2_num * a1_den);
+a1_den = a1_den * a2_den;
+
+a2_num = 3 * (a2_num * a3_den - a3_num * a2_den);
+a2_den = a2_den * a3_den;
+
+a3_num = 4 * (a3_num * a4_den - a4_num * a3_den);
+a3_den = a3_den * a4_den;
+
+a0_num = 1 * (a0_num * a1_den - a1_num * a0_den);
+a0_den = a0_den * a1_den;
+
+a1_num = 2 * (a1_num * a2_den - a2_num * a1_den);
+a1_den = a1_den * a2_den;
+
+a2_num = 3 * (a2_num * a3_den - a3_num * a2_den);
+a2_den = a2_den * a3_den;
+
+a0_num = 1 * (a0_num * a1_den - a1_num * a0_den);
+a0_den = a0_den * a1_den;
+
+a1_num = 2 * (a1_num * a2_den - a2_num * a1_den);
+a1_den = a1_den * a2_den;
+
+a0_num = 1 * (a0_num * a1_den - a1_num * a0_den);
+a0_den = a0_den * a1_den;
     ";
 
     // Step 1: Lexical Analysis

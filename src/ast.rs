@@ -212,7 +212,6 @@ impl Flattener {
     }
 
     fn expr_to_c(&self, expr: &Expr) -> String {
-        // Simple recursive string generator for C expressions
         match expr {
             Expr::Literal(n) => n.to_string(),
             Expr::Variable(v) => v.clone(),
@@ -226,8 +225,9 @@ impl Flattener {
                     BinaryOp::GreaterThan => ">",
                     BinaryOp::Equal => "==",
                 };
+                // ADD PARENTHESES HERE
                 format!(
-                    "{}{}{}",
+                    "(({}){}({}))",
                     self.expr_to_c(left),
                     op_str,
                     self.expr_to_c(right)
@@ -237,7 +237,7 @@ impl Flattener {
                 let arg_strs: Vec<String> = args.iter().map(|a| self.expr_to_c(a)).collect();
                 format!("{}({})", name, arg_strs.join(","))
             }
-            Expr::StrLiteral(s) => s.clone(),
+            Expr::StrLiteral(s) => format!("\"{}\"", s), // Ensure strings are quoted
         }
     }
 }
@@ -254,7 +254,7 @@ fn generate_ternary_tree_main(blocks: &[BasicBlock]) -> String {
         let action = match &block.next_state {
             NextState::Static(id) => {
                 if let Some(effect) = &block.effect {
-                    format!("({},{})", effect, id)
+                    format!("(({}),{})", effect, id)
                 } else {
                     format!("({})", id)
                 }
